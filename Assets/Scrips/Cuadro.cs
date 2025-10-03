@@ -19,6 +19,8 @@ public class Cuadro : MonoBehaviour
         hits = 0;
 
         tipo_disparo = 1;
+
+        transform.position = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
@@ -114,6 +116,7 @@ public class Cuadro : MonoBehaviour
         if (collision.gameObject.tag == "powerup")
         {
             tipo_disparo = 2;
+            sound.playPowerup();
 
             Destroy(collision.gameObject);
         }

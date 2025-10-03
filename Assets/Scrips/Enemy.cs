@@ -11,7 +11,14 @@ public class Enemy : MonoBehaviour
 
     int par_impar;
 
+    SoundManager sound;
+
     public GameObject enemy_bullet;
+
+    public GameObject powerUpPrefab; 
+    [Range(0, 1)] 
+    public float powerUpDropChance = 0.1f;
+    
 
     int hits;
 
@@ -66,7 +73,13 @@ public class Enemy : MonoBehaviour
 
             if (hits == 5)
             {
+                sound.playExplosionA();
+                if (Random.value < powerUpDropChance)
+                {
+                    Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
+                }
                 Destroy(gameObject);
+                
             }
         }
     }

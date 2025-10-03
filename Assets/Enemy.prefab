@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy_bullet: {fileID: 7750355468413716581, guid: 7e4b93563d37f4ea0bfda14a8f9da7e8, type: 3}
+  powerUpPrefab: {fileID: 51901723836930151, guid: 77c666399f8f14edd9de311a3cbd048a, type: 3}
+  powerUpDropChance: 1
 --- !u!70 &2652445830852270832
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

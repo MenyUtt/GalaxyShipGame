@@ -6,17 +6,20 @@ public class SoundManager : MonoBehaviour
 {
     public AudioSource disparo_nave;
     public AudioSource explosion;
+    public AudioSource Powerup;
+
+    public AudioSource explosionarcade;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void playDisparoNave()
@@ -27,5 +30,13 @@ public class SoundManager : MonoBehaviour
     public void playExplosion()
     {
         explosion.Play();
+    }
+    public void playPowerup()
+    {
+        Powerup.Play();
+    }
+     public void playExplosionA()
+    {
+        explosionarcade.Play();
     }
 }
