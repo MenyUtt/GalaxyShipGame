@@ -96,7 +96,7 @@ public class Enemy2 : MonoBehaviour
 
             Destroy(collision.gameObject);
 
-            if (hits == 1)
+            if (hits >= 1)
             {
 
                 if (Random.value < powerUpDropChance)

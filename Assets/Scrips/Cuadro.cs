@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Cuadro : MonoBehaviour
 {
@@ -9,8 +10,13 @@ public class Cuadro : MonoBehaviour
     public GameObject circulo, bala2, bomba;
     public GameObject vida1, vida2, vida3;
 
+    public Image iconoArma;           
+    public Sprite spriteBalaNormal;
+    public Sprite spriteBala2;
+    public Sprite spriteBomba;
     int hits, tipo_disparo;
-
+    private bool hasBala2;
+    private bool hasBomba;          
     public SoundManager sound;
 
     // Start is called before the first frame update
@@ -19,6 +25,9 @@ public class Cuadro : MonoBehaviour
         hits = 0;
 
         tipo_disparo = 1;
+        hasBala2 = false;
+        hasBomba = false;
+        ActualizarIconoArma();
 
         transform.position = new Vector3(0, 0, 0);
     }
@@ -26,6 +35,11 @@ public class Cuadro : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            // Llama a la función que cambia de arma
+            CambiarArma();
+        }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             velocity.x = -2;
@@ -115,6 +129,43 @@ public class Cuadro : MonoBehaviour
             velocity.x = 0;
         }
     }
+    void CambiarArma()
+    {
+
+        if (tipo_disparo == 1)
+        {
+            if (hasBala2) tipo_disparo = 2;
+            else if (hasBomba) tipo_disparo = 3;
+        }
+        else if (tipo_disparo == 2)
+        {
+            if (hasBomba) tipo_disparo = 3;
+            else tipo_disparo = 1;
+        }
+        else if (tipo_disparo == 3)
+        {
+            tipo_disparo = 1;
+        }
+        sound.playCambioArma(); 
+        ActualizarIconoArma();
+    }
+
+    void ActualizarIconoArma()
+    {
+        switch (tipo_disparo)
+        {
+            case 1:
+                iconoArma.sprite = spriteBalaNormal;
+                break;
+            case 2:
+                iconoArma.sprite = spriteBala2;
+                break;
+            case 3:
+                iconoArma.sprite = spriteBomba;
+                break;
+        }
+    }
+
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -124,12 +175,47 @@ public class Cuadro : MonoBehaviour
             sound.playPowerup();
 
             Destroy(collision.gameObject);
+            ActualizarIconoArma();
         }
         if (collision.gameObject.tag == "powerup2")
         {
             tipo_disparo = 3;
             sound.playPowerup();
 
+            Destroy(collision.gameObject);
+            ActualizarIconoArma();
+        }
+        if (collision.gameObject.tag == "powerup3")
+        {
+            bool vidaRecuperada = false;
+
+            // 1. Busca si la vida 1 está inactiva
+            if (!vida1.activeSelf) 
+            {
+                vida1.SetActive(true);
+                vidaRecuperada = true;
+            }
+            // 2. Si no, busca si la vida 2 está inactiva
+            else if (!vida2.activeSelf)
+            {
+                vida2.SetActive(true);
+                vidaRecuperada = true;
+            }
+            // 3. Si no, busca si la vida 3 está inactiva
+            else if (!vida3.activeSelf)
+            {
+                vida3.SetActive(true);
+                vidaRecuperada = true;
+            }
+
+            // 4. Si se recuperó alguna vida, reproduce el sonido
+            if (vidaRecuperada)
+            {
+                // Llama a tu SoundManager de la forma correcta
+                sound.playPowerup();
+            }
+
+            // 5. Destruye el power-up siempre al final
             Destroy(collision.gameObject);
         }
 
@@ -139,7 +225,9 @@ public class Cuadro : MonoBehaviour
             || collision.gameObject.tag == "enemy2")
         {
             tipo_disparo = 1;
-
+            hasBala2 = false;
+            hasBomba = false;
+            ActualizarIconoArma();
             hits++;
 
             Destroy(collision.gameObject);
