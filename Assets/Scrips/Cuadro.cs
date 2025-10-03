@@ -94,17 +94,18 @@ public class Cuadro : MonoBehaviour
             if (tipo_disparo == 1)
             {
                 Instantiate(circulo, transform.position, transform.rotation);
+                sound.playDisparoNave();
             }
             if (tipo_disparo == 2)
             {
                 Instantiate(bala2, transform.position, transform.rotation);
+                sound.playDisparoNave();
             }
             if (tipo_disparo == 3)
             {
                 Instantiate(bomba, transform.position, transform.rotation);
+                sound.playBomba();
             }
-
-            sound.playDisparoNave();
             
         }
 

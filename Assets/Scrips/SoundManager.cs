@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource explosionarcade;
 
+    public AudioSource bomba;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +37,12 @@ public class SoundManager : MonoBehaviour
     {
         Powerup.Play();
     }
-     public void playExplosionA()
+    public void playExplosionA()
     {
         explosionarcade.Play();
+    }
+    public void playBomba()
+    {
+        bomba.Play();
     }
 }

@@ -53,13 +53,13 @@ public class Enemy2 : MonoBehaviour
             if (par_impar % 2 == 0)
                 {
                     // Mueve hacia arriba
-                    velocity.y = +5f; 
+                    velocity.y = +3f; 
                     velocity.x = 2f; 
                 }
             else
             {
                 // Mueve hacia abajo
-                velocity.y = -5f; 
+                velocity.y = -3f; 
                 velocity.x = 2f;
             }
 
@@ -96,7 +96,7 @@ public class Enemy2 : MonoBehaviour
 
             Destroy(collision.gameObject);
 
-            if (hits >= 1)
+            if (hits == 1)
             {
 
                 if (Random.value < powerUpDropChance)
