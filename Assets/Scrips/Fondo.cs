@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fondo : MonoBehaviour
 {
-    public GameObject asteroid, enemy, powerup;
+    public GameObject asteroid, enemy, powerup, enemy2;
 
     // Start is called before the first frame update
     void Start()
@@ -12,6 +12,8 @@ public class Fondo : MonoBehaviour
         InvokeRepeating("SpawnAsteroids", 0, 1);
 
         InvokeRepeating("SpawnEnemy", 0, 3);
+
+        InvokeRepeating("SpawnEnemy2", 0, 3);
 
         InvokeRepeating("SpawnPowerUp", 0, Random.Range(10, 20));
 
@@ -40,10 +42,10 @@ public class Fondo : MonoBehaviour
         Vector2 position = new Vector2(Random.Range(-7f, 7f), 5f);
         Instantiate(enemy, position, Quaternion.identity);
     }
-
-    void SpawnPowerUp()
+    void SpawnEnemy2()
     {
-        Vector2 position = new Vector2(Random.Range(-7f, 7f), -3.8f);
-        Instantiate(powerup, position, Quaternion.identity);
+        Vector2 position = new Vector2(Random.Range(-7f, 7f), 5f);
+        Instantiate(enemy2, position, Quaternion.identity);
     }
+
 }

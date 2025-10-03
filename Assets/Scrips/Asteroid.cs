@@ -8,6 +8,10 @@ public class Asteroid : MonoBehaviour
     float float_scale;
     int hits;
 
+    public GameObject powerUpPrefab; 
+    [Range(0, 1)] 
+    public float powerUpDropChance = 0.1f;
+
     public Sprite asteroid2, asteroid3;
 
     SoundManager sound;
@@ -55,6 +59,36 @@ public class Asteroid : MonoBehaviour
             if (hits == 3)
             {
                 sound.playExplosion();
+                if (Random.value < powerUpDropChance)
+                {
+                    Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
+                }
+
+                int var_score = PlayerPrefs.GetInt("score");
+                int var_max = PlayerPrefs.GetInt("max");
+
+                var_score += 10;
+
+                if (var_score >= var_max)
+                {
+                    PlayerPrefs.SetInt("max", var_score);
+                }
+
+                PlayerPrefs.SetInt("score", var_score);
+                Destroy(gameObject);
+            }
+        }
+        if (collision.gameObject.tag == "Bala3")
+        {
+            hits++;
+            Destroy(collision.gameObject);
+            if (hits == 1)
+            {
+                sound.playExplosion();
+                if (Random.value < powerUpDropChance)
+                {
+                    Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
+                }
 
                 int var_score = PlayerPrefs.GetInt("score");
                 int var_max = PlayerPrefs.GetInt("max");

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy2 : MonoBehaviour
 {
     Vector2 velocity;
 
@@ -47,16 +47,20 @@ public class Enemy : MonoBehaviour
             next_spawn_time += Random.Range(0.5f, 1.5f);
         }
 
-        //Movimiento Izq Der
+        //Movimiento Izq Der Arri Abajo
         if (Time.time > next_mov_time)
         {
             if (par_impar % 2 == 0)
-            {
-                velocity.x = +5f;
-            }
+                {
+                    // Mueve hacia arriba
+                    velocity.y = +5f; 
+                    velocity.x = 2f; 
+                }
             else
             {
-                velocity.x = -5f;
+                // Mueve hacia abajo
+                velocity.y = -5f; 
+                velocity.x = 2f;
             }
 
             next_mov_time += 2f;
@@ -66,7 +70,7 @@ public class Enemy : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "bullet" || collision.gameObject.tag == "bala2")
+        if (collision.gameObject.tag == "bullet" || collision.gameObject.tag == "Bala2")
         {
             hits++;
 

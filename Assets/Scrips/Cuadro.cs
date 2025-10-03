@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Cuadro : MonoBehaviour
 {
     Vector2 velocity;
-    public GameObject circulo, bala2;
+    public GameObject circulo, bala2, bomba;
     public GameObject vida1, vida2, vida3;
 
     int hits, tipo_disparo;
@@ -51,7 +51,7 @@ public class Cuadro : MonoBehaviour
             float angulo = transform.rotation.eulerAngles.z;
             Debug.Log("angulo= " + angulo);
 
-            if (angulo >=0 && angulo <= 90)
+            if (angulo >= 0 && angulo <= 90)
             {
                 float var1 = (angulo) * 100 / 90;
                 float var2 = (var1 * 1) / 100;
@@ -95,13 +95,17 @@ public class Cuadro : MonoBehaviour
             {
                 Instantiate(circulo, transform.position, transform.rotation);
             }
-            else
+            if (tipo_disparo == 2)
             {
                 Instantiate(bala2, transform.position, transform.rotation);
             }
-            
+            if (tipo_disparo == 3)
+            {
+                Instantiate(bomba, transform.position, transform.rotation);
+            }
 
             sound.playDisparoNave();
+            
         }
 
         if (Input.GetKeyUp(KeyCode.LeftArrow) ||
@@ -120,10 +124,18 @@ public class Cuadro : MonoBehaviour
 
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.tag == "powerup2")
+        {
+            tipo_disparo = 3;
+            sound.playPowerup();
+
+            Destroy(collision.gameObject);
+        }
 
         if (collision.gameObject.tag == "asteroid"
             || collision.gameObject.tag == "enemybullet"
-            || collision.gameObject.tag == "enemy")
+            || collision.gameObject.tag == "enemy"
+            || collision.gameObject.tag == "enemy2")
         {
             tipo_disparo = 1;
 
